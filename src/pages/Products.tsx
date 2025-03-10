@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { DataTable } from '@/components/ui/DataTable';
 import { Button } from '@/components/ui/button';
@@ -43,6 +42,14 @@ export default function Products() {
     {
       accessorKey: 'name',
       header: 'Product Name',
+      cell: ({ row }) => (
+        <Link 
+          to={`/products/${row.original.id}`} 
+          className="text-primary hover:underline font-medium"
+        >
+          {row.getValue('name')}
+        </Link>
+      ),
     },
     {
       accessorKey: 'sku',
@@ -120,9 +127,11 @@ export default function Products() {
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel>Actions</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
-                  <EyeIcon className="mr-2 h-4 w-4" />
-                  View
+                <DropdownMenuItem asChild>
+                  <Link to={`/products/${product.id}`}>
+                    <EyeIcon className="mr-2 h-4 w-4" />
+                    View
+                  </Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
                   <Edit className="mr-2 h-4 w-4" />
@@ -147,6 +156,10 @@ export default function Products() {
           <h2 className="text-3xl font-bold tracking-tight">Products</h2>
           <p className="text-muted-foreground">View and manage all products from your vendors</p>
         </div>
+        <Button>
+          <PlusCircle className="mr-2 h-4 w-4" />
+          Add Product
+        </Button>
       </div>
 
       <DataTable 
